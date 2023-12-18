@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import { Mylogin } from './Mylogin';
 import { getTokenFromUrl } from './spotify';
@@ -10,8 +10,8 @@ const spotify = new SpotifyWebApi();
 
 
 function App() {
-  const [token, setToken] = useState(null);
-  const [{ user }, dispatch] = useDataLayerValue();
+  // const [token, setToken] = useState(null);
+  const [{ user, token }, dispatch] = useDataLayerValue();
 
   // Run code based on given condition
   useEffect(() => {
@@ -20,7 +20,12 @@ function App() {
     const _token = hash.access_token;
 
     if(_token){
-      setToken(_token);
+      dispatch({
+        type: "SET_TOKEN",
+        token: _token,
+      })
+
+      // setToken(_token);
       
       spotify.setAccessToken(_token);
 
@@ -33,16 +38,13 @@ function App() {
         });
       });
     } 
-
-    console.log("I have a token -> ", token);
   }, []);
 
-  console.log("shrey", user);
 
   return (
     <div className="App">
       {
-        token ? (<Player/>) : (<Mylogin/>)
+        token ? (<Player spotify={spotify}/>) : (<Mylogin/>)
       }
       
       </div>
