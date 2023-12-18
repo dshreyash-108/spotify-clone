@@ -25,19 +25,19 @@ function App() {
       spotify.setAccessToken(_token);
 
       spotify.getMe().then((user)=> {
-        // console.log('User from Spotify API:', user);
+        console.log('User from Spotify API:', user);
 
-        // dispatch({
-        //   type: 'SET_USER',
-        //   user: user,
-        // });
+        dispatch({
+          type: 'SET_USER',
+          user: user,
+        });
       });
     } 
 
     console.log("I have a token -> ", token);
   }, []);
 
-  // console.log("shrey", user);
+  console.log("shrey", user);
 
   return (
     <div className="App">
